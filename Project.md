@@ -4,7 +4,8 @@ answer...
 
 # 2. Prompt Engineering and Model Parameter Choice
 
-both llama3.2 and gemma3:270m have the repetition problem I've faced in every lab so I increased the temperature to make it not so deterministic so it can choose more options than the one they repeat
+deepseek-r1:8b > 3b - better balance of speed & context/memory
+increase temperature: make it not so deterministic so it can choose more options than repeating the same response over and over
 
 # 3. Tools Usage
 

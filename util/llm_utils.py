@@ -1,18 +1,19 @@
+#import necessary libraries
 import re
 import json
 import ollama
 import hashlib
 import logging
-
 from pathlib import Path
 from types import MethodType
 from collections import defaultdict
-
 from tools.init import TOOL_SCHEMAS
 from tools.tool_runner import run_tool
 
+#create deterministic seed based on string input
 ollama_seed = lambda x: int(str(int(hashlib.sha512(x.encode()).hexdigest(), 16))[:8])
 
+#convert list of chat messages to a readable string format
 def pretty_stringify_chat(messages):
   stringified_chat = ''
   for message in messages:
@@ -21,6 +22,7 @@ def pretty_stringify_chat(messages):
       stringified_chat += f"{role}: {content}\n\n\n"
   return stringified_chat
 
+#replace {{placeholders}} in a string with values from kwargs
 def insert_params(string, **kwargs):
     pattern = r"{{(.*?)}}"
     matches = re.findall(pattern, string)
@@ -30,6 +32,7 @@ def insert_params(string, **kwargs):
             string = string.replace("{{" + match + "}}", replacement)
     return string
 
+#decorator to track and print tool calls and their results
 def tool_tracker(func):
     calls = defaultdict(list)
     def wrapper(*args, **kwargs):
@@ -39,6 +42,7 @@ def tool_tracker(func):
         return result
     return wrapper
 
+#console-based chat interface for testing agents without a full UI
 def run_console_chat(**kwargs):
     chat = AgentTemplate.from_file(**kwargs)
     message = chat.start_chat()
@@ -53,6 +57,7 @@ def run_console_chat(**kwargs):
                 print('Ending match:', ending_match)
             break
 
+#agent template class that manages chat state, tool calls, and response processing
 class AgentTemplate:
     def __init__(self, template, **kwargs):
         self.instance = template
@@ -65,6 +70,7 @@ class AgentTemplate:
         self.parameters = kwargs
         self.instance['tools'] = TOOL_SCHEMAS
 
+    #class method to create an agent instance from a JSON template file
     @classmethod
     def from_file(cls, template_file, **kwargs):
         with open(Path(template_file), 'r') as f:
@@ -72,13 +78,15 @@ class AgentTemplate:
 
         return cls(template, **kwargs)
 
+    #method to send chat messages to the model and handle tool calls
     def completion(self, **kwargs):
         self.parameters |= kwargs
         for item in self.messages:
             item['content'] = insert_params(item['content'], **self.parameters)
 
         return ollama.chat(**self.instance)
-
+    
+    #method to handle a single turn of chat, including processing tool calls and results
     def chat_turn(self, **kwargs):
         response = self.completion(**kwargs)
         message = response['message']
@@ -96,7 +104,8 @@ class AgentTemplate:
         self.messages.append({'role': message.role, 'content': message.content})
         logging.info(f'{message.role}: {message.content}')
         return response 
-
+    
+    #generator function to manage the chat responses and user input until stop condition
     def _chat_generator_func(self):
         while True:
             response = self.chat_turn()
@@ -112,11 +121,13 @@ class AgentTemplate:
             self.messages.append({'role': 'user', 'content': user_input})
             if user_input == '/exit':
                 break
-
+            
+    #start the chat generator and return the first message
     def start_chat(self):
         self.chat_generator = self._chat_generator_func()
         first_message = next(self.chat_generator)
         return first_message
 
+    #method to send user input to the chat generator and get the next response
     def send(self, user_input):
         return self.chat_generator.send(user_input)

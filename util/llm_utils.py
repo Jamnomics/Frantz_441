@@ -8,6 +8,9 @@ from pathlib import Path
 from types import MethodType
 from collections import defaultdict
 
+from tools.init import TOOL_SCHEMAS
+from tools.tool_runner import run_tool
+
 ollama_seed = lambda x: int(str(int(hashlib.sha512(x.encode()).hexdigest(), 16))[:8])
 
 def pretty_stringify_chat(messages):
@@ -60,6 +63,7 @@ class AgentTemplate:
         process_response_method = kwargs['process_response'] if 'process_response' in kwargs else lambda self, x: x 
         self.process_response = MethodType(process_response_method, self)
         self.parameters = kwargs
+        self.instance['tools'] = TOOL_SCHEMAS
 
     @classmethod
     def from_file(cls, template_file, **kwargs):
@@ -78,6 +82,17 @@ class AgentTemplate:
     def chat_turn(self, **kwargs):
         response = self.completion(**kwargs)
         message = response['message']
+        if message.tool_calls:
+            self.messages.append({'role': 'assistant', 'content': message.content or '', 'tool_calls': message.tool_calls})
+            for tool_call in message.tool_calls:
+                name = tool_call.function.name
+                args = tool_call.function.arguments
+                print(f'\n[Tool call: {name}({args})]')
+                result = run_tool(name, args)
+                print(f'[Tool result: {result}]')
+                self.messages.append({'role': 'tool', 'content': result})
+            response = self.completion()
+            message = response['message']
         self.messages.append({'role': message.role, 'content': message.content})
         logging.info(f'{message.role}: {message.content}')
         return response 

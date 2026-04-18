@@ -1,0 +1,8 @@
+Name: Gorin the Gruff
+Type: NPC
+Race: dwarf
+Class: guard
+Level: 1
+HP: 10/10
+Role: village guard
+Disposition: friendly

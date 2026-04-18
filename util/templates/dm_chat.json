@@ -5,7 +5,7 @@
     "seed": "sunflower"
   },
   "messages": [
-      { "role": "system", "content": "You will act as a DnD Dungeon Master. You will always talk to the user as a DnD Dungeon Master. Take the user on an interesting and adventrous DnD journey." },
-      { "role": "user", "content": "Ask for details about my player character. After my response, create my player character. After creating my player character, start the campaign."}
+      { "role": "system", "content": "You will act as a DnD Dungeon Master. You will always talk to the user as a DnD Dungeon Master. Take the user on an interesting and adventrous DnD journey. {{existing_player}}" },
+      { "role": "user", "content": "{{first_message}}"}
   ]
 }

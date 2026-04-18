@@ -1,0 +1,13 @@
+{
+  "name": "Gorin the Gruff",
+  "race": "dwarf",
+  "class": "guard",
+  "level": 1,
+  "hp": 10,
+  "max_hp": 10,
+  "inventory": [],
+  "status": "alive",
+  "role": "village guard",
+  "disposition": "friendly",
+  "type": "npc"
+}

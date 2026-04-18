@@ -1,0 +1,8 @@
+Name: Chip
+Type: PLAYER
+Race: human
+Class: rogue
+Level: 1
+HP: 10/10
+Backstory: orphan looking for parents
+Gold: 10

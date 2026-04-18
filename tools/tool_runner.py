@@ -28,11 +28,25 @@ def sanitize_args(tool_input: dict) -> dict:
     #return processed dictionary of clean arguments
     return cleaned
 
+#helper function to check for placeholder values
+def is_placeholder(value) -> bool:
+    PLACEHOLDER_VALUES = {'', '<nil>', 'nil', 'none', 'null', '<player name>', '<player race>', '<player class>', '<brief backstory>', '<name>', '<race>', '<class>', '<backstory>'}
+    if isinstance(value, str):
+        return value.strip().lower() in PLACEHOLDER_VALUES
+    return False
+
+#main function to run a tool by name with given input
 def run_tool(tool_name: str, tool_input: dict) -> str:
     #check if tool exists
     if tool_name not in TOOL_FUNCTIONS:
         return f"Unknown tool: {tool_name}"
     
-    #call cleaned tool function
+    #set input to cleaned argument
     clean_input = sanitize_args(tool_input)
+    
+    #block calls with placeholder values
+    fake_args = [k for k, v in clean_input.items() if is_placeholder(v)]
+    if fake_args:
+        return f"Tool {tool_name} called with placeholder values for {fake_args}. Ask the user for these details before calling the tool."
+    
     return TOOL_FUNCTIONS[tool_name](**clean_input)

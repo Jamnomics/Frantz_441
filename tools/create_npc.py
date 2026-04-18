@@ -5,6 +5,7 @@ sys.path.append(str(Path(__file__).parents[1]))
 
 #import necessary libraries
 from tools.create_character import create_character
+from tools.character_store import save_character
 
 #schema for creating an npc character
 schema = {
@@ -34,4 +35,5 @@ def run(name: str, race: str, char_class: str, role: str, disposition: str, leve
     character["role"] = role
     character["disposition"] = disposition
     character["type"] = "npc"
+    save_character(character)
     return str(character)

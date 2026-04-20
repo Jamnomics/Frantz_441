@@ -69,6 +69,7 @@ class AgentTemplate:
         self.process_response = MethodType(process_response_method, self)
         self.parameters = kwargs
         self.instance['tools'] = TOOL_SCHEMAS
+        self.last_user_input = "no user input yet"
 
     #class method to create an agent instance from a JSON template file
     @classmethod
@@ -95,6 +96,8 @@ class AgentTemplate:
             for tool_call in message.tool_calls:
                 name = tool_call.function.name
                 args = tool_call.function.arguments
+                if name == "reason" and hasattr(self, 'last_user_input'): #check for reasoning and last input
+                    args['player_intent'] = self.last_user_input #inject last user input into reasoning tool calls
                 print(f'\n[Tool call: {name}({args})]')
                 result = run_tool(name, args)
                 print(f'[Tool result: {result}]')
@@ -118,6 +121,7 @@ class AgentTemplate:
             user_input = yield response.message.content
 
             logging.info(f'User: {user_input}')
+            self.last_user_input = user_input  #track last user input for reasoning
             self.messages.append({'role': 'user', 'content': user_input})
             if user_input == '/exit':
                 break

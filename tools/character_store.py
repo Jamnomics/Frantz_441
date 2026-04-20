@@ -5,13 +5,7 @@ sys.path.append(str(Path(__file__).parents[1]))
 
 #import necessary libraries
 import json
-
-#save directories
-PROJECT_ROOT = Path(__file__).parents[1]
-PLAYERS_JSON = PROJECT_ROOT / "data" / "characters" / "players" / "json"
-PLAYERS_RAG  = PROJECT_ROOT / "data" / "characters" / "players" / "rag"
-NPCS_JSON    = PROJECT_ROOT / "data" / "characters" / "npcs" / "json"
-NPCS_RAG     = PROJECT_ROOT / "data" / "characters" / "npcs" / "rag"
+from config import PLAYERS_JSON, PLAYERS_RAG, NPCS_JSON, NPCS_RAG
 
 #save character function and RAG summary builder
 def save_character(character: dict) -> str:
@@ -28,6 +22,10 @@ def save_character(character: dict) -> str:
     summary = build_rag_summary(character)
     with open(rag_dir / f"{name_slug}.txt", "w") as f:
         f.write(summary)
+        
+    #index in RAG store
+    from rag.embedder import index_character
+    index_character(character["name"], summary)
 
     print(f"[Saved {name_slug} to {json_dir} and {rag_dir}]")
     return summary

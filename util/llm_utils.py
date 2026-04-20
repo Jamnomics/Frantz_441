@@ -9,6 +9,10 @@ from types import MethodType
 from collections import defaultdict
 from tools.init import TOOL_SCHEMAS
 from tools.tool_runner import run_tool
+from colorama import init, Fore, Style
+
+#resets color after each print automatically
+init(autoreset=True)
 
 #create deterministic seed based on string input
 ollama_seed = lambda x: int(str(int(hashlib.sha512(x.encode()).hexdigest(), 16))[:8])
@@ -47,14 +51,16 @@ def run_console_chat(**kwargs):
     chat = AgentTemplate.from_file(**kwargs)
     message = chat.start_chat()
     while True:
-        print('Agent:', message)
+        print(Fore.CYAN + '\nAgent: ' + message)
         try:
-            message = chat.send(input('You: '))
+            user_input = input(Fore.MAGENTA + '\nYou: ')
+            print(Style.RESET_ALL, end='', flush=True)
+            message = chat.send(user_input)
         except StopIteration as e:
             if isinstance(e.value, tuple):
-                print('Agent:', e.value[0])
+                print(Fore.CYAN + '\nAgent: ' + e.value[0])
                 ending_match = e.value[1]
-                print('Ending match:', ending_match)
+                print(Fore.CYAN + '\nEnding match: ' + ending_match)
             break
 
 #agent template class that manages chat state, tool calls, and response processing
@@ -96,8 +102,22 @@ class AgentTemplate:
             for tool_call in message.tool_calls:
                 name = tool_call.function.name
                 args = tool_call.function.arguments
-                if name == "reason" and hasattr(self, 'last_user_input'): #check for reasoning and last input
-                    args['player_intent'] = self.last_user_input #inject last user input into reasoning tool calls
+                
+                #skip reason calls before user input
+                if name == "reason" and self.last_user_input == "no user input yet":
+                    self.messages.append({'role': 'tool', 'content': "No player action yet. Introduce the campaign without reasoning."})
+                    continue
+                
+                #inject last user input into reasoning tool calls
+                if name == "reason" and hasattr(self, 'last_user_input'):
+                    args['player_intent'] = self.last_user_input
+                
+                #block incomplete tool calls
+                empty_args = [k for k, v in args.items() if v == '' or v is None]
+                if empty_args:
+                    self.messages.append({'role': 'tool', 'content': f"Error: cannot call {name} - missing fields: {empty_args}."})
+                    continue
+            
                 print(f'\n[Tool call: {name}({args})]')
                 result = run_tool(name, args)
                 print(f'[Tool result: {result}]')

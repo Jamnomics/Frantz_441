@@ -75,7 +75,7 @@ class AgentTemplate:
         self.process_response = MethodType(process_response_method, self)
         self.parameters = kwargs
         self.instance['tools'] = TOOL_SCHEMAS
-        self.last_user_input = "no user input yet"
+        self.last_user_input = "progress the campaign"
 
     #class method to create an agent instance from a JSON template file
     @classmethod
@@ -102,11 +102,6 @@ class AgentTemplate:
             for tool_call in message.tool_calls:
                 name = tool_call.function.name
                 args = tool_call.function.arguments
-                
-                #skip reason calls before user input
-                if name == "reason" and self.last_user_input == "no user input yet":
-                    self.messages.append({'role': 'tool', 'content': "No player action yet. Introduce the campaign without reasoning."})
-                    continue
                 
                 #inject last user input into reasoning tool calls
                 if name == "reason" and hasattr(self, 'last_user_input'):

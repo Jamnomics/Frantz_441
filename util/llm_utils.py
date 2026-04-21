@@ -97,6 +97,15 @@ class AgentTemplate:
     def chat_turn(self, **kwargs):
         response = self.completion(**kwargs)
         message = response['message']
+        
+        #block raw JSON tool call output
+        content = message.content or ''
+        if content.strip().startswith('{"name"') or content.strip().startswith('{"tool"'):
+            self.messages.append({'role': 'assistant', 'content': content})
+            self.messages.append({'role': 'user', 'content': "Do not write tool calls as JSON text. Use the actual tool calling mechanism and respond in plain narrative text only."})
+            response = self.completion()
+            message = response['message']
+            
         if message.tool_calls:
             self.messages.append({'role': 'assistant', 'content': message.content or '', 'tool_calls': message.tool_calls})
             for tool_call in message.tool_calls:

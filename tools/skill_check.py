@@ -1,5 +1,6 @@
 #import necessary libraries
 from tools.roll_dice import run as roll_dice
+from tools.game_store import save_skill_check
 
 #schema for skill checks
 schema = {
@@ -30,4 +31,15 @@ def run(skill: str, difficulty: int, modifier: int = 0) -> str:
     print(f"Roll: {roll_value} + {modifier} modifier = {total}")
     print(f"DC: {difficulty}")
     print(f"Result: {'SUCCESS' if success else 'FAILURE'}")
+    
+    #save skill check for context
+    check = {
+        "skill":      skill,
+        "roll":       roll_value,
+        "modifier":   modifier,
+        "total":      total,
+        "difficulty": difficulty,
+        "result":     "SUCCESS" if success else "FAILURE"
+    }
+    save_skill_check(check)
     return f"Skill check {skill}: rolled {roll_value} + {modifier} = {total} vs DC {difficulty}. {'SUCCESS' if success else 'FAILURE'}."

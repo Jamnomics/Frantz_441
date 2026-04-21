@@ -1,5 +1,6 @@
 #import necessary libraries
 from tools.interact_character import interact_character
+from tools.game_store import save_action
 
 #schema for character actions
 schema = {
@@ -30,4 +31,7 @@ def run(action: str, target: str, context: str, requires_check: bool) -> str:
     print(f"Action: {action}")
     print(f"Target: {target}")
     print(f"Requires check: {requires_check}")
+    
+    #save action for context
+    save_action(interaction)
     return str(interaction)

@@ -1,3 +1,6 @@
+#import necessary libraries
+from tools.game_store import save_encounter
+
 #schema for encounter details
 schema = {
     "type": "function",
@@ -25,4 +28,7 @@ def run(encounter_type: str, location: str, participants: str, objective: str) -
     print(f"Location: {location}")
     print(f"Participants: {participants}")
     print(f"Objective: {objective}")
+    
+    #save encounter for context
+    save_encounter(encounter)
     return str(encounter)

@@ -1,0 +1,4 @@
+Conversation with: Gorin the Gruff
+Topic: the missing villagers
+Context: The village elder has expressed concern about the disappearances and asked for Gorin's assistance in investigating
+Disposition: friendly

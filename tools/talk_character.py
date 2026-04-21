@@ -1,6 +1,7 @@
 #import necessary libraries
 from tools.interact_character import interact_character
 from tools.character_store import load_character
+from tools.game_store import save_talk
 
 #schema for character interaction details
 schema = {
@@ -34,4 +35,7 @@ def run(character_name: str, topic: str, context: str) -> str:
     print(f"\n[TALKING TO {character_name.upper()}]")
     print(f"Topic: {topic}")
     print(f"Context: {context}")
+    
+    #save interaction for context
+    save_talk(interaction)
     return str(interaction)

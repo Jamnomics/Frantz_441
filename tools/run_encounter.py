@@ -34,10 +34,5 @@ def run(encounter_type: str, location: str, participants: str, objective: str) -
     
     #create encounter details
     encounter = {"type": encounter_type, "location": location, "participants": participants, "objective": objective, "status": "active"}
-    print(f"\n[ENCOUNTER STARTED]")
-    print(f"Type: {encounter_type}")
-    print(f"Location: {location}")
-    print(f"Participants: {participants}")
-    print(f"Objective: {objective}")
     save_encounter(encounter)
     return str(encounter)

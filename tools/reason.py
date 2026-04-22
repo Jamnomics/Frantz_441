@@ -31,12 +31,4 @@ def run(situation: str, player_intent: str, possible_outcomes: str, chosen_outco
         return "Missing required chosen_outcome field: describe what outcome you chose and why"
     if not next_narrative:
         return "Missing required next_narrative field: describe how you will narrate the outcome to the player"
-    
-    #log the reasoning chain for inspection
-    print(f"\n[REASONING]")
-    print(f"Situation: {situation}")
-    print(f"Player intent: {player_intent}")
-    print(f"Possible outcomes: {possible_outcomes}")
-    print(f"Chosen outcome: {chosen_outcome}")
-    print(f"Next narrative: {next_narrative}\n")
-    return f"Reasoning complete. Proceed with: {next_narrative}"
+    return f"Proceed with: {next_narrative}"

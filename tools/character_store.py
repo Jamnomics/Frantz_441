@@ -27,7 +27,7 @@ def save_character(character: dict) -> str:
     from rag.embedder import index_character
     index_character(character["name"], summary)
 
-    print(f"[Saved {name_slug} to {json_dir} and {rag_dir}]")
+    print(f"Saved {name_slug} to {json_dir} and {rag_dir}")
     return summary
 
 #helper function for building RAG summaries

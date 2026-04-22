@@ -26,7 +26,7 @@ def _save(data: dict, json_dir: Path, rag_dir: Path, summary: str) -> str:
     from rag.embedder import index_character
     index_character(slug, summary)
 
-    print(f"[Saved {slug}]")
+    print(f"Saved {slug} to {json_dir} and {rag_dir}")
     return summary
 
 #save encounters using main save logic

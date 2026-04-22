@@ -36,11 +36,6 @@ def run(action: str, target: str, context: str, requires_check: bool) -> str:
     interaction = interact_character(target, "action", context)
     interaction["action"] = action
     interaction["requires_check"] = requires_check
-
-    print(f"\n[ACTION TAKEN]")
-    print(f"Action: {action}")
-    print(f"Target: {target}")
-    print(f"Requires check: {requires_check}")
     
     #save action for context
     save_action(interaction)

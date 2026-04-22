@@ -40,10 +40,6 @@ def run(character_name: str, topic: str, context: str) -> str:
     if character:
         interaction["disposition"] = character.get("disposition", "neutral")
         interaction["role"] = character.get("role", "unknown")
-
-    print(f"\n[TALKING TO {character_name.upper()}]")
-    print(f"Topic: {topic}")
-    print(f"Context: {context}")
     
     #save interaction for context
     save_talk(interaction)

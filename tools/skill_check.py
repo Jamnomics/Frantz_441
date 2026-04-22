@@ -33,11 +33,6 @@ def run(skill: str, difficulty: int, modifier: int = 0) -> str:
     roll_value = int(roll_result.split("total: ")[1].rstrip(")"))
     total = roll_value + modifier
     success = total >= difficulty
-
-    print(f"\n[SKILL CHECK: {skill.upper()}]")
-    print(f"Roll: {roll_value} + {modifier} modifier = {total}")
-    print(f"DC: {difficulty}")
-    print(f"Result: {'SUCCESS' if success else 'FAILURE'}")
     
     #save skill check for context
     check = {

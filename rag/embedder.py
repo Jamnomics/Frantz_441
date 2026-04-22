@@ -22,7 +22,7 @@ def index_characters():
 
     #no rag files to index
     if not rag_files:
-        print("[RAG] No character files found to index.")
+        print("RAG: No character files found to index")
         return
 
     #loop through each file to index
@@ -32,17 +32,17 @@ def index_characters():
         #skip if already indexed
         existing = collection.get(ids=[doc_id])
         if existing["ids"]:
-            print(f"[RAG] Already indexed: {doc_id}")
+            print(f"RAG: Already indexed {doc_id}")
             continue
 
         #read text and add to collection
         text = path.read_text()
         collection.add(ids=[doc_id], documents=[text], metadatas=[{"source": str(path)}])
-        print(f"[RAG] Indexed: {doc_id}")
+        print(f"RAG: Indexed {doc_id}")
 
 #index a single character immediately after creation
 def index_character(name: str, text: str):
     collection = get_collection()
     doc_id = name.lower().replace(" ", "_")
     collection.upsert(ids=[doc_id], documents=[text], metadatas=[{"source": name}])
-    print(f"[RAG] Indexed new character: {doc_id}")
+    print(f"RAG: Indexed new character {doc_id}")

@@ -23,8 +23,6 @@ _tts_engine = pyttsx3.init()
 _tts_engine.setProperty('rate', 300)
 _tts_engine.setProperty('volume', 1.0)
 engine = pyttsx3.init()
-for i, voice in enumerate(engine.getProperty('voices')):
-    print(f"[TTS Voice {i}] {voice.name} | {voice.id}")
 engine.setProperty('voice', engine.getProperty('voices')[1].id)
 
 #speak text of message
@@ -57,7 +55,7 @@ def tool_tracker(func):
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
         calls[f'{func.__name__}_calls'].append({'name': func.__name__, 'args': args, 'kwargs': kwargs, 'result': result})
-        print('\n\nTools Called: \n', calls, '\n\n')
+        print('Tools Called: ', calls, '')
         return result
     return wrapper
 
@@ -66,18 +64,18 @@ def run_console_chat(**kwargs):
     chat = AgentTemplate.from_file(**kwargs)
     message = chat.start_chat()
     while True:
-        print(Fore.CYAN + '\nAgent: ' + message)
+        print(Fore.CYAN + '\nAgent: ' + message + '\n')
         speak(message)
         try:
             user_input = input(Fore.MAGENTA + '\nYou: ')
-            print(Style.RESET_ALL, end='', flush=True)
+            print(Style.RESET_ALL, end='\n', flush=True)
             message = chat.send(user_input)
         except StopIteration as e:
             if isinstance(e.value, tuple):
-                print(Fore.CYAN + '\nAgent: ' + e.value[0])
+                print(Fore.CYAN + '\nAgent: ' + e.value[0] + '\n')
                 speak(e.value[0])
                 ending_match = e.value[1]
-                print(Fore.CYAN + '\nEnding match: ' + ending_match)
+                print(Fore.CYAN + '\nEnding match: ' + ending_match + '\n')
             break
 
 #agent template class that manages chat state, tool calls, and response processing
@@ -139,9 +137,9 @@ class AgentTemplate:
                     self.messages.append({'role': 'tool', 'content': f"Error: cannot call {name} - missing fields: {empty_args}."})
                     continue
             
-                print(f'\n[Tool call: {name}({args})]')
+                print(f'Tool call: {name}({args})')
                 result = run_tool(name, args)
-                print(f'[Tool result: {result}]')
+                print(f'Tool result: {result}')
                 self.messages.append({'role': 'tool', 'content': result})
             response = self.completion()
             message = response['message']

@@ -22,8 +22,8 @@ init(autoreset=True)
 _tts_engine = pyttsx3.init()
 _tts_engine.setProperty('rate', 300)
 _tts_engine.setProperty('volume', 1.0)
-engine = pyttsx3.init()
-engine.setProperty('voice', engine.getProperty('voices')[1].id)
+voice = _tts_engine.getProperty('voices')[1]
+_tts_engine.setProperty('voice', voice.id)
 
 #speak text of message
 def speak(text: str):
@@ -65,6 +65,7 @@ def run_console_chat(**kwargs):
     message = chat.start_chat()
     while True:
         print(Fore.CYAN + '\nAgent: ' + message + '\n')
+        print(f"{voice.name} Speaking...")
         speak(message)
         try:
             user_input = input(Fore.MAGENTA + '\nYou: ')

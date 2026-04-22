@@ -10,12 +10,27 @@ from collections import defaultdict
 from tools.init import TOOL_SCHEMAS
 from tools.tool_runner import run_tool
 from colorama import init, Fore, Style
+import pyttsx3
+
+#create deterministic seed based on string input
+ollama_seed = lambda x: int(str(int(hashlib.sha512(x.encode()).hexdigest(), 16))[:8])
 
 #resets color after each print automatically
 init(autoreset=True)
 
-#create deterministic seed based on string input
-ollama_seed = lambda x: int(str(int(hashlib.sha512(x.encode()).hexdigest(), 16))[:8])
+#initialize tts engine and settings
+_tts_engine = pyttsx3.init()
+_tts_engine.setProperty('rate', 300)
+_tts_engine.setProperty('volume', 1.0)
+engine = pyttsx3.init()
+for i, voice in enumerate(engine.getProperty('voices')):
+    print(f"[TTS Voice {i}] {voice.name} | {voice.id}")
+engine.setProperty('voice', engine.getProperty('voices')[1].id)
+
+#speak text of message
+def speak(text: str):
+    _tts_engine.say(text)
+    _tts_engine.runAndWait()
 
 #convert list of chat messages to a readable string format
 def pretty_stringify_chat(messages):
@@ -52,6 +67,7 @@ def run_console_chat(**kwargs):
     message = chat.start_chat()
     while True:
         print(Fore.CYAN + '\nAgent: ' + message)
+        speak(message)
         try:
             user_input = input(Fore.MAGENTA + '\nYou: ')
             print(Style.RESET_ALL, end='', flush=True)
@@ -59,6 +75,7 @@ def run_console_chat(**kwargs):
         except StopIteration as e:
             if isinstance(e.value, tuple):
                 print(Fore.CYAN + '\nAgent: ' + e.value[0])
+                speak(e.value[0])
                 ending_match = e.value[1]
                 print(Fore.CYAN + '\nEnding match: ' + ending_match)
             break

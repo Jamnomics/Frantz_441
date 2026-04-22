@@ -22,13 +22,22 @@ schema = {
 
 #create details of encounter state
 def run(encounter_type: str, location: str, participants: str, objective: str) -> str:
+    #notify agent of missing required fields
+    if not encounter_type:
+        return "Missing required encounter_type field: describe the type of encounter"
+    if not location:
+        return "Missing required location field: describe where the encounter takes place"
+    if not participants:
+        return "Missing required participants field: specify who is involved in the encounter"
+    if not objective:
+        return "Missing required objective field: describe what needs to happen to resolve the encounter"
+    
+    #create encounter details
     encounter = {"type": encounter_type, "location": location, "participants": participants, "objective": objective, "status": "active"}
     print(f"\n[ENCOUNTER STARTED]")
     print(f"Type: {encounter_type}")
     print(f"Location: {location}")
     print(f"Participants: {participants}")
     print(f"Objective: {objective}")
-    
-    #save encounter for context
     save_encounter(encounter)
     return str(encounter)

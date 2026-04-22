@@ -22,7 +22,7 @@ schema = {
                 "level": {"type": "integer", "description": "NPC's level", "default": 1},
                 "hp": {"type": "integer", "description": "NPC's hit points", "default": 10},
                 "role": {"type": "string", "description": "NPC's role in the world e.g. shopkeeper, villain, quest giver"},
-                "disposition": {"type": "string", "description": "NPC's attitude e.g. friendly, hostile, neutral"}
+                "disposition": {"type": "string", "description": "NPC's attitude and personality e.g. friendly, hostile, neutral"}
             },
             "required": ["name", "race", "char_class", "role", "disposition"]
         }
@@ -31,6 +31,19 @@ schema = {
 
 #function for creating an npc character
 def run(name: str, race: str, char_class: str, role: str, disposition: str, level: int = 1, hp: int = 10) -> str:
+    #notify agent of missing required fields
+    if not name:
+        return "Missing required name field: specify the NPC's name"
+    if not race:
+        return "Missing required race field: specify the NPC's race"
+    if not char_class:
+        return "Missing required char_class field: specify the NPC's class"
+    if not role:
+        return "Missing required role field: describe the NPC's role in the world"
+    if not disposition:
+        return "Missing required disposition field: describe the NPC's attitude and personality"
+    
+    #create the non-playable character
     character = create_character(name, race, char_class, level, hp)
     character["role"] = role
     character["disposition"] = disposition

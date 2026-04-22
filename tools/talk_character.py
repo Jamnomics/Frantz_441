@@ -14,7 +14,7 @@ schema = {
             "properties": {
                 "character_name": {"type": "string", "description": "Name of the NPC to talk to"},
                 "topic": {"type": "string", "description": "What the player wants to talk about"},
-                "context": {"type": "string", "description": "Current situation or recent events"}
+                "context": {"type": "string", "description": "Current situation or relevant recent events"}
             },
             "required": ["character_name", "topic", "context"]
         }
@@ -23,6 +23,15 @@ schema = {
 
 #run interaction with a character
 def run(character_name: str, topic: str, context: str) -> str:
+    #notify agent of missing required fields
+    if not character_name:
+        return "Missing required character_name field: specify the name of the NPC to talk to"
+    if not topic:
+        return "Missing required topic field: describe what the player wants to talk about"
+    if not context:
+        return "Missing required context field: describe the current situation or relevant recent events"
+    
+    #create character
     interaction = interact_character(character_name, "dialogue", context)
     interaction["topic"] = topic
 

@@ -32,13 +32,13 @@ schema = {
 def run(name: str, race: str, char_class: str, backstory: str, level: int = 1, hp: int = 10) -> str:
     #notify agent of missing required fields
     if not name:
-        return "Ask user for name of thier player character."
+        return "Missing required name field: ask user for name of their player character"
     if not race:
-        return "Ask user for race of thier player character."
+        return "Missing required race field: ask user for race of their player character"
     if not char_class:
-        return "Ask user for class of thier player character."
+        return "Missing required char_class field: ask user for class of their player character"
     if not backstory:
-        return "Ask user for backstory of thier player character."
+        return "Missing required backstory field: ask user for backstory of their player character"
 
     #create the player character
     character = create_character(name, race, char_class, level, hp)

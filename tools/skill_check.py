@@ -20,8 +20,15 @@ schema = {
     }
 }
 
-#roll a d20 and apply modifier
+#roll skill check and determine passing
 def run(skill: str, difficulty: int, modifier: int = 0) -> str:
+    #notify agent of missing required fields
+    if not skill:
+        return "Missing required skill field: specify the skill being checked"
+    if not difficulty:
+        return "Missing required difficulty field: determine the difficulty class to beat"
+    
+    #roll a d20 and apply modifier
     roll_result = roll_dice(sides=20, count=1)
     roll_value = int(roll_result.split("total: ")[1].rstrip(")"))
     total = roll_value + modifier

@@ -22,8 +22,8 @@ TOOL_FUNCTIONS = {
     "create_npc":    npc_run,
     "create_player": player_run,
     "reason": reason_run,
-    "run_encounter":      encounter_run,
-    "talk_to_character":  talk_run,
-    "take_action":        action_run,
-    "skill_check":        skill_run
+    "run_encounter": encounter_run,
+    "talk_to_character": talk_run,
+    "take_action": action_run,
+    "skill_check": skill_run
 }

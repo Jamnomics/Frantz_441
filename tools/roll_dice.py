@@ -25,13 +25,17 @@ schema = {
 
 #function for executing dice roll
 def run(sides: int, count: int = 1) -> str:
+    #notify agent of missing required fields
+    if not sides:
+        return "Missing required sides field: specify number of sides on the die"
+    
     #check sides and count are positive integers
     if not isinstance(sides, int) or sides <= 0:
-        return "Error: 'sides' must be a positive integer."
+        return "Incorrect required sides field: number of sides must be a positive integer"
     if not isinstance(count, int) or count <= 0:
-        return "Error: 'count' must be a positive integer."
+        return "Incorrect required count field: number of dice to roll must be a positive integer"
 
-    #generate random rolls between 1 and sides, repeated count times
+    #generate random rolls between 1 and sides repeated count times
     rolls = [random.randint(1, sides) for _ in range(count)]
     
     #return formatted result including individual rolls and total

@@ -10,7 +10,12 @@ from collections import defaultdict
 from tools.init import TOOL_SCHEMAS
 from tools.tool_runner import run_tool
 from colorama import init, Fore, Style
-import pyttsx3
+import edge_tts
+import asyncio
+import os
+#skip pygame startup message
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
+import pygame
 
 #create deterministic seed based on string input
 ollama_seed = lambda x: int(str(int(hashlib.sha512(x.encode()).hexdigest(), 16))[:8])
@@ -18,17 +23,32 @@ ollama_seed = lambda x: int(str(int(hashlib.sha512(x.encode()).hexdigest(), 16))
 #resets color after each print automatically
 init(autoreset=True)
 
-#initialize tts engine and settings
-_tts_engine = pyttsx3.init()
-_tts_engine.setProperty('rate', 300)
-_tts_engine.setProperty('volume', 1.0)
-voice = _tts_engine.getProperty('voices')[1]
-_tts_engine.setProperty('voice', voice.id)
-
 #speak text of message
+voice = "en-US-EmmaNeural"
+TTS_file = "tempTTS.mp3"
+pygame.mixer.init()
 def speak(text: str):
-    _tts_engine.say(text)
-    _tts_engine.runAndWait()
+    #generate speech file
+    async def _generate():
+        print(f"TTS: {TTS_file} generating...")
+        communicate = edge_tts.Communicate(text, voice=voice, rate="+50%")
+        await communicate.save(TTS_file)
+    asyncio.run(_generate())
+    
+    #load the speech file
+    print(f"TTS: {TTS_file} loading...")
+    pygame.mixer.music.load(TTS_file)
+    
+    #play the speech file
+    print(f"TTS: {voice} speaking...")
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy():
+        pygame.time.wait(10)
+    
+    #remove file
+    print(f"TTS: {TTS_file} unloading...")
+    pygame.mixer.music.unload()
+    os.remove(TTS_file)
 
 #convert list of chat messages to a readable string format
 def pretty_stringify_chat(messages):
@@ -65,7 +85,6 @@ def run_console_chat(**kwargs):
     message = chat.start_chat()
     while True:
         print(Fore.CYAN + '\nAgent: ' + message + '\n')
-        print(f"{voice.name} Speaking...")
         speak(message)
         try:
             user_input = input(Fore.MAGENTA + '\nYou: ')

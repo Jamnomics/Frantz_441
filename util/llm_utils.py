@@ -82,17 +82,20 @@ def tool_tracker(func):
 #console-based chat interface for testing agents without a full UI
 def run_console_chat(**kwargs):
     chat = AgentTemplate.from_file(**kwargs)
+    print("Agent: Generating response...")
     message = chat.start_chat()
     while True:
-        print(Fore.CYAN + '\nAgent: ' + message + '\n')
+        print(Fore.CYAN + '\nDM: ' + message + '\n')
         speak(message)
         try:
             user_input = input(Fore.MAGENTA + '\nYou: ')
             print(Style.RESET_ALL, end='\n', flush=True)
+            if user_input != '/exit':
+                print("Agent: Generating response...")
             message = chat.send(user_input)
         except StopIteration as e:
             if isinstance(e.value, tuple):
-                print(Fore.CYAN + '\nAgent: ' + e.value[0] + '\n')
+                print(Fore.CYAN + '\nDM: ' + e.value[0] + '\n')
                 speak(e.value[0])
                 ending_match = e.value[1]
                 print(Fore.CYAN + '\nEnding match: ' + ending_match + '\n')

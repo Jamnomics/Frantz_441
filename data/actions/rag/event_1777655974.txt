@@ -1,0 +1,4 @@
+Action: investigate the old windmill
+Target: the old windmill
+Context: looking around the guild for clues about the stolen locket
+Requires Check: false

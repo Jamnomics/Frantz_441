@@ -1,0 +1,8 @@
+{
+  "character": "the old windmill",
+  "interaction_type": "action",
+  "context": "looking around the guild for clues about the stolen locket",
+  "status": "in_progress",
+  "action": "investigate the old windmill",
+  "requires_check": "false"
+}

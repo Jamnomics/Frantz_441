@@ -1,0 +1,13 @@
+{
+  "name": "Chip",
+  "race": "human",
+  "class": "rogue",
+  "level": 1,
+  "hp": 10,
+  "max_hp": 10,
+  "inventory": [],
+  "status": "alive",
+  "backstory": "teenage orphan looking for parents",
+  "type": "player",
+  "gold": 10
+}

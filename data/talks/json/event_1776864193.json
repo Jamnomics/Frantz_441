@@ -1,9 +1,0 @@
-{
-  "character": "Gorin the Gruff",
-  "interaction_type": "dialogue",
-  "context": "the village elder has expressed concern about the disappearances and asked for Gorin",
-  "status": "in_progress",
-  "topic": "the missing villagers",
-  "disposition": "friendly",
-  "role": "village guard"
-}

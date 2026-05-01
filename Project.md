@@ -1,7 +1,7 @@
 # 1. Base System Functionality
 
-My AI system runs without errors and can manage basic scenarios. To illustrate, no errors occuried in the examples provided below. Additionally, print statements such as those for calling tools display the model's scenario management. Scenarios the AI system can run include:
-1. AI generated Dungeom Master narration
+My AI system runs without errors and can manage basic scenarios. To illustrate, no errors occurred in the examples provided below. Additionally, print statements such as those for calling tools display the model's scenario management. Scenarios the AI system can run include:
+1. AI generated Dungeon Master narration
 2. automated dice rolls for skill checks and saves
 3. create player and NPC characters
 4. detailed narration of player actions and events
@@ -17,11 +17,11 @@ In addition to prompt engineering, I adjusted the model's parameters throughout 
 
 # 3. Tools Usage
 
-I implemented tool usage for the agent and added different tools for areas that the agent could not properly handle on its own. The agent has acces to a list of tools relevant for managing diverse scenarios that can occur in Dungeons and Dragons campaigns. It can call applicable functions as it deems necessary for each scenario. Tools usage handles scenarios such as the seventh listed, social encounters with NPC dialogue. As shown in the old player example below, the agent calls the talk to character tool when the user chooses to ask a character for more detail. Notably, the agent called the most relevant tool available that matched the user's request. This tool categorizes details of the interaction for the agent's use in description and stores the result for future rememberence.
+I implemented tool usage for the agent and added different tools for areas that the agent could not properly handle on its own. The agent has access to a list of tools relevant for managing diverse scenarios that can occur in Dungeons and Dragons campaigns. It can call applicable functions as it deems necessary for each scenario. Tools usage handles scenarios such as the seventh listed, social encounters with NPC dialogue. As shown in the old player example below, the agent calls the talk to character tool when the user chooses to ask a character for more detail. Notably, the agent called the most relevant tool available that matched the user's request. This tool categorizes details of the interaction for the agent's use in description and stores the result for future remembrance.
 
 # 4. Planning & Reasoning
 
-To implement planning and reasoning, I added a tool that walks the agent through multiple steps of its response similarly to a chain-of-thought model. It is designed to force the model to think through the suitability and plausibility of its response to enhance conversation coherence and performance. Planning and reasoning handles scenarios such as the fourth listed, detailed narration of player actions and events. As shown in the old player example, the model calls the reason tool before beginning its first response of the campaign. It must describe the current situation, user response, and possible outcomes before chosing the most appropriate narrative with which to proceed.
+To implement planning and reasoning, I added a tool that walks the agent through multiple steps of its response similarly to a chain-of-thought model. It is designed to force the model to think through the suitability and plausibility of its response to enhance conversation coherence and performance. Planning and reasoning handles scenarios such as the fourth listed, detailed narration of player actions and events. As shown in the old player example, the model calls the reason tool before beginning its first response of the campaign. It must describe the current situation, user response, and possible outcomes before choosing the most appropriate narrative with which to proceed.
 
 # 5. RAG Implementation
 
@@ -29,11 +29,11 @@ My implementation of Retrieval Augmented Generation (RAG) provides the agent wit
 
 # 6. Additional Tools / Innovation
 
-The additional tool I implemented was AI generated text-to-speech narration. The generated narration handles the first listed scenario, AI generated Dungeom Master narration. As shown in the two examples below, the tool generates an audio file of an AI voice speaking the agent's response and then plays the narration for the user. Though it does not show properly in this markdown file and is not a tool that utilizes AI, I color coded the agent's text as blue and the user's text as purple for clarity. It differentiates the relevant campaign text from the white print statements used to display the validity of behind the scenes programs running such as those for showing each step of the text-to-speech audio file generation and utilization.
+The additional tool I implemented was AI generated text-to-speech narration. The generated narration handles the first listed scenario, AI generated Dungeon Master narration. As shown in the two examples below, the tool generates an audio file of an AI voice speaking the agent's response and then plays the narration for the user. Though it does not show properly in this markdown file and is not a tool that utilizes AI, I color coded the agent's text as blue and the user's text as purple for clarity. It differentiates the relevant campaign text from the white print statements used to display the validity of behind the scenes programs running such as those for showing each step of the text-to-speech audio file generation and utilization.
 
 # 7. Code Quality & Modular Design
 
-Throughout the project, I maintained well-documented and modular code as well as demonstrated best practices in control and managemnt. First, each function and class has comments describing their implementation and purpose. Moreover, many files and functions have comments within them describing the steps that each block of code performs. Second, each part of the project is separated into modular files and organized into folders. Furthermore, pieces that share functionality are separated such as how the create character tool is split into a different file from create player and create NPC instead of the code being rewritten in both files. Third, structural issues such as circular imports were fixed using best practice of control and management such as centralizing path configuration.
+Throughout the project, I maintained well-documented and modular code as well as demonstrated best practices in control and management. First, each function and class has comments describing their implementation and purpose. Moreover, many files and functions have comments within them describing the steps that each block of code performs. Second, each part of the project is separated into modular files and organized into folders. Furthermore, pieces that share functionality are separated such as how the create character tool is split into a different file from create player and create NPC instead of the code being rewritten in both files. Third, structural issues such as circular imports were fixed using best practice of control and management such as centralizing path configuration.
 
 # New Player Example
 

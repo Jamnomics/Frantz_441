@@ -120,3 +120,59 @@ TTS: tempTTS.mp3 unloading...
 You: /exit
 
 PS C:\Users\Jamie\Desktop\Frantz_441> 
+
+# Old Player Example
+
+PS C:\Users\Jamie\Desktop\Frantz_441> & c:\python313\python.exe c:/Users/Jamie/Desktop/Frantz_441/agent.py
+RAG: Already indexed chip
+Agent: Generating response...
+Tool call: reason({'chosen_outcome': 'Gorin provides information', 'next_narrative': 'Gorin shares what he knows about the recent strange occurrences in the village, and Chip decides how to proceed.', 'situation': 'The village elder has expressed concern about the disappearances and asked Gorin, the village guard, for help.', 'player_intent': 'progress the campaign', 'possible_outcomes': 'Gorin provides information, a lead is found, or nothing changes'})
+Tool result: Proceed with: Gorin shares what he knows about the recent strange occurrences in the village, and Chip decides how to proceed.
+
+DM: Gorin rubs his chin thoughtfully as he leans against the wooden post of the village gate. "To be honest, I don't know much about what's been going on," he says in a deep, rumbling voice. "But I do know that it started a few nights ago. One of our villagers, a young woman named Elara, didn't return from her evening walk. We thought maybe she'd just gone off to visit with friends or something, but when she didn't come back the next day... well, we got worried."
+
+Gorin's expression turns serious. "Since then, three more people have gone missing. All of them were last seen heading into the nearby forest. I've had some of my men search for them, but so far, nothing's turned up."
+
+Chip eyes Gorin's face, taking in every detail. He can tell that the guard is genuinely concerned about the disappearances, and he wants to know more.
+
+What would you like Chip to do next?
+
+(Remember, you're a rogue, so think about stealthy moves, sneaky tricks, or perhaps a daring rescue mission!)
+
+TTS: tempTTS.mp3 generating...
+TTS: tempTTS.mp3 loading...
+TTS: en-US-EmmaNeural speaking...
+TTS: tempTTS.mp3 unloading...
+
+You: ask him for more details about her disappearence
+
+Agent: Generating response...
+Tool call: talk_to_character({'context': 'the missing villager', 'character_name': 'Gorin the Gruff', 'topic': 'Elara'})
+RAG: Indexed new character event_1777656647
+Saved event_1777656647 to C:\Users\Jamie\Desktop\Frantz_441\data\talks\json and C:\Users\Jamie\Desktop\Frantz_441\data\talks\rag
+Tool result: {'character': 'Gorin the Gruff', 'interaction_type': 'dialogue', 'context': 'the missing villager', 'status': 'in_progress', 'topic': 'Elara'}
+
+DM: "Tell me more about Elara's disappearance," Chip asks Gorin, his eyes locked on the guard's face. "What was her last known location? Did she say anything strange before she vanished?"
+
+Gorin nods, his expression serious. "Elara was a bit of a loner, but everyone in the village liked her. She was out for her evening walk about an hour after dinner, I think. She usually takes that route to clear her head before bed. But when she didn't show up for breakfast the next morning... well, that's when we started getting worried."
+
+Gorin pauses, collecting his thoughts. "From what our scouts have reported, Elara was seen walking alone in the forest around midnight. They didn't see anyone else with her, but they did notice that the trees seemed to be... twisted, somehow. Like they were leaning in towards her or something. It was quite unsettling."
+
+Chip's eyes narrow, intrigued by Gorin's description of the forest. He can almost feel a malevolent presence lurking just out of sight.
+
+"What about the other missing villagers?" Chip asks, trying to piece together the puzzle. "Did they have any commonalities with Elara? Any clues that might lead us to them?"
+
+Gorin furrows his brow. "That's what's got me stumped. They all seemed to vanish without a word. No signs of struggle or foul play. It's like... they just disappeared into thin air."
+
+Chip nods thoughtfully, taking in Gorin's words. He knows he needs to act fast if he wants to find out what's happening to these villagers.
+
+What would you like Chip to do next?
+
+TTS: tempTTS.mp3 generating...
+TTS: tempTTS.mp3 loading...
+TTS: en-US-EmmaNeural speaking...
+TTS: tempTTS.mp3 unloading...
+
+You: /exit
+
+PS C:\Users\Jamie\Desktop\Frantz_441> 

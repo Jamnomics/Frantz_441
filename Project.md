@@ -1,6 +1,6 @@
 # 1. Base System Functionality
 
-My AI system runs without errors and can manage basic scenarios. To illustrate, no errors occurred in the examples provided below. Additionally, print statements such as those for calling tools display the model's scenario management. Scenarios the AI system can run include:
+The AI system I created runs without errors and can manage basic scenarios. To illustrate, no errors occurred in the examples provided below. Additionally, print statements such as those for calling tools display the model's scenario management. Scenarios the AI system can run include:
 1. AI generated Dungeon Master narration
 2. automated dice rolls for skill checks and saves
 3. create player and NPC characters
@@ -25,11 +25,11 @@ To implement planning and reasoning, I added a tool that walks the agent through
 
 # 5. RAG Implementation
 
-My implementation of Retrieval Augmented Generation (RAG) provides the agent with persistent memory across sessions. Major elements of the campaign such as important characters and interactions are stored as plain text summaries for future recall later in the campaign. They are saved as they occur for organic creation of context and memory. RAG handles scenarios such as the sixth listed, maintaining game state. As shown in the two examples below, RAG indexes stored data such as the files associated with the player character. Later, it can retrieve the indexed files to remember and apply information relevant to current events and actions. Thus, the campaign's narrative and state stays consistent within and across sessions.
+The implementation of Retrieval Augmented Generation (RAG) provides the agent with persistent memory across sessions. Major elements of the campaign such as important characters and interactions are stored as plain text summaries for future recall later in the campaign. They are saved as they occur for organic creation of context and memory. RAG handles scenarios such as the sixth listed, maintaining game state. As shown in the two examples below, RAG indexes stored data such as the files associated with the player character. Later, it can retrieve the indexed files to remember and apply information relevant to current events and actions. Thus, the campaign's narrative and state stays consistent within and across sessions.
 
 # 6. Additional Tools / Innovation
 
-The additional tool I implemented was AI generated text-to-speech narration. The generated narration handles the first listed scenario, AI generated Dungeon Master narration. As shown in the two examples below, the tool generates an audio file of an AI voice speaking the agent's response and then plays the narration for the user. Though it does not show properly in this markdown file and is not a tool that utilizes AI, I color coded the agent's text as blue and the user's text as purple for clarity. It differentiates the relevant campaign text from the white print statements used to display the validity of behind the scenes programs running such as those for showing each step of the text-to-speech audio file generation and utilization.
+The additional tool implemented was AI generated text-to-speech narration. The generated narration handles the first listed scenario, AI generated Dungeon Master narration. As shown in the two examples below, the tool generates an audio file of an AI voice speaking the agent's response and then plays the narration for the user. Though it does not show properly in this markdown file and is not a tool that utilizes AI, I color coded the agent's text as blue and the user's text as purple for clarity. It differentiates the relevant campaign text from the white print statements used to display the validity of behind the scenes programs running such as those for showing each step of the text-to-speech audio file generation and utilization.
 
 # 7. Code Quality & Modular Design
 
